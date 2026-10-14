@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title data-i18n="page_title_dashboard">HIIT · Workout board</title>
+    <meta
+      name="description"
+      content="HIIT workout board — scroll the row, tap a card for the full exercise list."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="theme.js"></script>
+    <script src="i18n.js"></script>
+    <script src="user.js"></script>
+    <script src="session-guard.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="app-header-inner">
+        <a class="brand brand--link" href="index.html">
+          <div class="brand-mark" aria-hidden="true">HI</div>
+          <div class="brand-text">
+            <strong>HIIT ME UP</strong>
+            <span data-i18n="brand_gym_floor">Gym floor sessions</span>
+          </div>
+        </a>
+        <div class="app-header-search">
+          <input
+            type="search"
+            id="dashboard-search"
+            class="dashboard-search__input app-header-search__input"
+            placeholder="Search by card ID"
+            data-i18n-placeholder="search_placeholder"
+            autocomplete="off"
+            enterkeyhint="search"
+            aria-label="Search by card ID"
+            data-i18n-aria-label="search_aria"
+          />
+        </div>
+        <div class="app-header-actions">
+          <button type="button" class="theme-toggle" aria-label="Toggle color theme"></button>
+          <a
+            href="badges.html"
+            class="header-badges-link"
+            aria-label="Open badges"
+            data-i18n-aria-label="header_badges_aria"
+          >
+            <svg
+              class="header-badges-link__icon"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+              <path d="M4 22h16" />
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+            </svg>
+          </a>
+          <div data-user-menu></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="promo-banner-outer shell" id="promo-banner-outer" hidden>
+      <div
+        class="promo-banner"
+        id="promo-banner"
+        role="region"
+        aria-labelledby="promo-banner-heading"
+      >
+        <p
+          class="promo-banner__text"
+          id="promo-banner-heading"
+          data-i18n-html="promo_banner_html"
+        >
+          New: <strong>Badges</strong> — see the personal records you&rsquo;ve broken and keep beating your best.
+        </p>
+        <div class="promo-banner__actions">
+          <a href="badges.html" class="promo-banner__cta" data-i18n="promo_view_badges">View badges</a>
+          <button
+            type="button"
+            class="promo-banner__close"
+            aria-label="Dismiss badges announcement"
+            data-i18n-aria-label="promo_dismiss"
+          >
+            <svg
+              class="promo-banner__close-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                fill="currentColor"
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <h1 class="page-heading" data-i18n="dash_heading">Workout dashboard</h1>
+
+      <section
+        class="home-section metrics-panel-section"
+        aria-labelledby="metrics-heading"
+        data-metrics-expanded="true"
+      >
+        <div class="shell">
+          <div class="metrics-panel-surface">
+            <div class="metrics-panel-header">
+              <div class="section-title metrics-panel-header__title">
+                <h2 id="metrics-heading" data-i18n="metrics_heading">Metrics</h2>
+                <p data-i18n="metrics_sub">Progress across all sessions on this device.</p>
+              </div>
+              <button
+                type="button"
+                class="metrics-panel-chevron-btn"
+                id="metrics-panel-toggle"
+                aria-expanded="true"
+                aria-controls="metrics-panel-content"
+                aria-label="Collapse Metrics section"
+              >
+                <svg
+                  class="metrics-panel-chevron"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path fill="currentColor" d="M7 10l5 5 5-5H7z" />
+                </svg>
+              </button>
+            </div>
+            <div id="metrics-panel-content" class="metrics-panel-content">
+              <div
+                class="heatmap-shell heatmap-section"
+                role="region"
+                aria-label="Completion calendar by day and time"
+                data-i18n-aria-label="heatmap_section_aria"
+              >
+                <div id="completion-heatmap"></div>
+              </div>
+              <div class="heatmap-shell heatmap-section" role="region" aria-label="Muscle map" data-i18n-aria-label="bm_section_aria">
+                <div id="body-map"></div>
+              </div>
+              <div class="metrics-shell">
+                <div
+                  class="metrics-grid"
+                  id="metrics-grid"
+                  role="region"
+                  aria-label="Session counts"
+                  data-i18n-aria-label="metrics_grid_aria"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-section" aria-labelledby="completed-heading">
+        <div class="shell">
+          <div class="section-title">
+            <h2 id="completed-heading" data-i18n="completed_heading">Completed</h2>
+            <p data-i18n="completed_sub">
+              Sessions where every exercise is marked done. They appear here automatically.
+            </p>
+          </div>
+        </div>
+        <div class="shell carousel-shell">
+          <p class="section-empty" id="completed-empty" hidden data-i18n="completed_empty">
+            No sessions completed yet.
+          </p>
+          <div class="carousel-breakout">
+            <div
+              class="carousel carousel--hiit"
+              id="completed-track"
+              tabindex="0"
+              role="region"
+              aria-label="Completed sessions — scroll horizontally"
+              data-i18n-aria-label="carousel_completed_aria"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-section" aria-labelledby="training-heading">
+        <div class="shell">
+          <div class="section-title">
+            <h2 id="training-heading" data-i18n="training_heading">Your training blocks</h2>
+            <p data-i18n="training_sub">
+              Cards are numbered in order (#1, #2, …). Sessions still in progress stay here until every
+              exercise is checked off.
+            </p>
+          </div>
+        </div>
+        <div class="shell carousel-shell">
+          <p class="section-empty" id="training-empty" hidden data-i18n="training_empty">
+            All sessions are complete — great work.
+          </p>
+          <div class="carousel-breakout">
+            <div
+              class="carousel carousel--hiit"
+              id="cards-track"
+              tabindex="0"
+              role="region"
+              aria-label="Active sessions — scroll horizontally, tap a card to open"
+              data-i18n-aria-label="carousel_training_aria"
+            ></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="promo-banner.js"></script>
+    <script src="data.js"></script>
+    <script src="progress.js"></script>
+    <script src="heatmap.js"></script>
+    <script src="bodymap-zones.js"></script>
+    <script src="bodymap.js"></script>
+    <script src="user-menu.js"></script>
+    <script src="saved.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

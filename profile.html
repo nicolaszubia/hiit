@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title data-i18n="page_title_profile">Profile · HIIT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="theme.js"></script>
+    <script src="i18n.js"></script>
+  </head>
+  <body class="profile-page">
+    <header class="app-header">
+      <div class="app-header-inner">
+        <a class="brand brand--link" href="index.html">
+          <div class="brand-mark" aria-hidden="true">HI</div>
+          <div class="brand-text">
+            <strong>HIIT ME UP</strong>
+            <span data-i18n="brand_profile">Profile</span>
+          </div>
+        </a>
+        <div class="app-header-actions">
+          <button type="button" class="theme-toggle" aria-label="Toggle color theme"></button>
+          <a
+            href="badges.html"
+            class="header-badges-link"
+            aria-label="Open badges"
+            data-i18n-aria-label="header_badges_aria"
+          >
+            <svg
+              class="header-badges-link__icon"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+              <path d="M4 22h16" />
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+            </svg>
+          </a>
+          <div data-user-menu></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="profile-main">
+      <div id="profile-gate" class="profile-gate">
+        <h1 class="profile-gate-title" data-i18n="profile_gate_title">Sign in required</h1>
+        <p class="profile-lead" data-i18n="profile_gate_lead">
+          Log in or create an account to view and edit your profile on this device.
+        </p>
+        <div class="profile-gate-actions">
+          <a href="auth.html#login" class="profile-save profile-save--inline" data-i18n="profile_log_in">Log in</a>
+          <a href="auth.html#signup" class="profile-gate-link" data-i18n="profile_sign_up_link">Sign up</a>
+        </div>
+      </div>
+
+      <div id="profile-content" class="profile-content" hidden>
+        <h1 data-i18n="profile_content_title">Your profile</h1>
+        <p class="profile-lead" data-i18n="profile_content_lead">
+          Update your details. Everything is stored only on this device.
+        </p>
+
+        <form id="profile-form" class="profile-form" novalidate>
+          <div class="profile-field">
+            <label for="profile-first-name" data-i18n="profile_first_name">First name</label>
+            <input id="profile-first-name" name="firstName" type="text" autocomplete="given-name" />
+          </div>
+          <div class="profile-field">
+            <label for="profile-last-name" data-i18n="profile_last_name">Last name</label>
+            <input id="profile-last-name" name="lastName" type="text" autocomplete="family-name" />
+          </div>
+          <div class="profile-field">
+            <label for="profile-age" data-i18n="profile_age">Age</label>
+            <input id="profile-age" name="age" type="number" min="1" max="120" inputmode="numeric" />
+          </div>
+          <div class="profile-field">
+            <label for="profile-gender" data-i18n="profile_gender">Gender</label>
+            <select id="profile-gender" name="gender" autocomplete="sex">
+              <option value="" data-i18n="profile_select">Select…</option>
+              <option value="female" data-i18n="profile_gender_female">Female</option>
+              <option value="male" data-i18n="profile_gender_male">Male</option>
+              <option value="non-binary" data-i18n="profile_gender_nb">Non-binary</option>
+              <option value="other" data-i18n="profile_gender_other">Other</option>
+              <option value="prefer-not" data-i18n="profile_gender_prefer_not">Prefer not to say</option>
+            </select>
+          </div>
+          <div class="profile-field">
+            <label for="profile-country" data-i18n="profile_country">Country</label>
+            <select id="profile-country" name="country" autocomplete="country-name">
+              <option value="" data-i18n="profile_select">Select…</option>
+              <option value="AR">Argentina</option>
+              <option value="AU">Australia</option>
+              <option value="AT">Austria</option>
+              <option value="BE">Belgium</option>
+              <option value="BR">Brazil</option>
+              <option value="CA">Canada</option>
+              <option value="CL">Chile</option>
+              <option value="CN">China</option>
+              <option value="CO">Colombia</option>
+              <option value="CR">Costa Rica</option>
+              <option value="DK">Denmark</option>
+              <option value="EG">Egypt</option>
+              <option value="FI">Finland</option>
+              <option value="FR">France</option>
+              <option value="DE">Germany</option>
+              <option value="GR">Greece</option>
+              <option value="IN">India</option>
+              <option value="ID">Indonesia</option>
+              <option value="IE">Ireland</option>
+              <option value="IL">Israel</option>
+              <option value="IT">Italy</option>
+              <option value="JP">Japan</option>
+              <option value="MY">Malaysia</option>
+              <option value="MX">Mexico</option>
+              <option value="NL">Netherlands</option>
+              <option value="NZ">New Zealand</option>
+              <option value="NO">Norway</option>
+              <option value="PE">Peru</option>
+              <option value="PH">Philippines</option>
+              <option value="PL">Poland</option>
+              <option value="PT">Portugal</option>
+              <option value="RO">Romania</option>
+              <option value="SA">Saudi Arabia</option>
+              <option value="SG">Singapore</option>
+              <option value="ZA">South Africa</option>
+              <option value="KR">South Korea</option>
+              <option value="ES">Spain</option>
+              <option value="SE">Sweden</option>
+              <option value="CH">Switzerland</option>
+              <option value="TW">Taiwan</option>
+              <option value="TH">Thailand</option>
+              <option value="TR">Turkey</option>
+              <option value="AE">United Arab Emirates</option>
+              <option value="GB">United Kingdom</option>
+              <option value="US">United States</option>
+              <option value="VN">Vietnam</option>
+            </select>
+          </div>
+          <div class="profile-field">
+            <label for="profile-email" data-i18n="profile_email">Email</label>
+            <input id="profile-email" name="email" type="email" autocomplete="email" />
+            <p id="profile-email-hint" class="profile-field-hint" hidden data-i18n="profile_email_hint">
+              Email matches your account and cannot be changed here.
+            </p>
+          </div>
+          <div class="profile-field">
+            <label for="profile-phone" data-i18n="profile_phone">Phone</label>
+            <input id="profile-phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+          <div class="profile-actions">
+            <button type="submit" class="profile-save" data-i18n="profile_save">Save profile</button>
+            <p id="profile-status" class="profile-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <script src="user.js"></script>
+    <script src="user-menu.js"></script>
+    <script src="data.js"></script>
+    <script src="saved.js"></script>
+    <script src="profile.js"></script>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title data-i18n="page_title_account">Account · HIIT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="theme.js"></script>
+    <script src="i18n.js"></script>
+  </head>
+  <body class="profile-page auth-page">
+    <div class="auth-split">
+      <main class="profile-main auth-main">
+        <div class="auth-lang-bar" role="group" aria-labelledby="auth-lang-label">
+          <span id="auth-lang-label" class="auth-lang-bar__label" data-i18n="menu_language">Language</span>
+          <div class="auth-lang-bar__row">
+            <button type="button" class="auth-lang-pill" data-hiit-set-lang="en">English</button>
+            <button type="button" class="auth-lang-pill" data-hiit-set-lang="es">Español</button>
+          </div>
+        </div>
+        <div class="auth-panels">
+          <section id="auth-panel-login" class="auth-panel" aria-labelledby="auth-login-heading">
+            <h1 id="auth-login-heading" class="auth-heading" data-i18n="auth_login_title">Log in</h1>
+            <p class="profile-lead auth-lead" data-i18n="auth_login_lead">
+              Use the email and password you signed up with on this device.
+            </p>
+            <form id="form-login" class="profile-form auth-form" novalidate>
+              <div class="profile-field">
+                <label for="login-email" data-i18n="auth_email">Email</label>
+                <input id="login-email" name="email" type="email" autocomplete="username" required />
+              </div>
+              <div class="profile-field">
+                <label for="login-password" data-i18n="auth_password">Password</label>
+                <input id="login-password" name="password" type="password" autocomplete="current-password" required />
+              </div>
+              <p id="login-error" class="auth-error" role="alert" aria-live="polite"></p>
+              <div class="profile-actions">
+                <button type="submit" class="profile-save" data-i18n="auth_login_submit">Log in</button>
+              </div>
+            </form>
+            <p class="auth-switch auth-forgot">
+              <button type="button" class="auth-switch-btn" data-auth-show="forgot" data-i18n="auth_forgot_link">
+                Forgot your password?
+              </button>
+            </p>
+            <p class="auth-switch">
+              <span data-i18n="auth_need_account">Need an account?</span>
+              <button type="button" class="auth-switch-btn" data-auth-show="signup" data-i18n="auth_sign_up_btn">
+                Sign up
+              </button>
+            </p>
+          </section>
+
+          <section id="auth-panel-signup" class="auth-panel" aria-labelledby="auth-signup-heading" hidden>
+            <h1 id="auth-signup-heading" class="auth-heading" data-i18n="auth_signup_title">Sign up</h1>
+            <p class="profile-lead auth-lead" data-i18n="auth_signup_lead">
+              Create a local account. Data stays in this browser only.
+            </p>
+            <form id="form-signup" class="profile-form auth-form" novalidate>
+              <div class="profile-field">
+                <label for="signup-email" data-i18n="auth_email">Email</label>
+                <input id="signup-email" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="profile-field">
+                <label for="signup-password" data-i18n="auth_password">Password</label>
+                <input
+                  id="signup-password"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  minlength="8"
+                />
+              </div>
+              <div class="profile-field">
+                <label for="signup-password-confirm" data-i18n="auth_confirm_password">Confirm password</label>
+                <input
+                  id="signup-password-confirm"
+                  name="passwordConfirm"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  minlength="8"
+                />
+              </div>
+              <p id="signup-error" class="auth-error" role="alert" aria-live="polite"></p>
+              <div class="profile-actions">
+                <button type="submit" class="profile-save" data-i18n="auth_create_account">Create account</button>
+              </div>
+            </form>
+            <p class="auth-switch">
+              <span data-i18n="auth_have_account">Already have an account?</span>
+              <button type="button" class="auth-switch-btn" data-auth-show="login" data-i18n="auth_login_btn">
+                Log in
+              </button>
+            </p>
+          </section>
+          <section id="auth-panel-forgot" class="auth-panel" aria-labelledby="auth-forgot-heading" hidden>
+            <h1 id="auth-forgot-heading" class="auth-heading" data-i18n="auth_forgot_title">Reset password</h1>
+            <p class="profile-lead auth-lead" data-i18n="auth_forgot_lead">
+              Accounts are stored only in this browser, so we can&rsquo;t send an email. Enter the email you signed up with
+              and choose a new password.
+            </p>
+            <form id="form-forgot" class="profile-form auth-form" novalidate>
+              <div class="profile-field">
+                <label for="forgot-email" data-i18n="auth_email">Email</label>
+                <input id="forgot-email" name="email" type="email" autocomplete="username" required />
+              </div>
+              <div class="profile-field">
+                <label for="forgot-password" data-i18n="auth_new_password">New password</label>
+                <input
+                  id="forgot-password"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  minlength="8"
+                />
+              </div>
+              <div class="profile-field">
+                <label for="forgot-password-confirm" data-i18n="auth_confirm_password">Confirm password</label>
+                <input
+                  id="forgot-password-confirm"
+                  name="passwordConfirm"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  minlength="8"
+                />
+              </div>
+              <p id="forgot-error" class="auth-error" role="alert" aria-live="polite"></p>
+              <div class="profile-actions">
+                <button type="submit" class="profile-save" data-i18n="auth_forgot_submit">Reset password</button>
+              </div>
+            </form>
+            <p class="auth-switch">
+              <button type="button" class="auth-switch-btn" data-auth-show="login" data-i18n="auth_back_to_login">
+                Back to log in
+              </button>
+            </p>
+          </section>
+        </div>
+      </main>
+      <aside class="auth-aside">
+        <div class="auth-aside__ambient" aria-hidden="true">
+          <span class="auth-aside__bloom auth-aside__bloom--left"></span>
+          <span class="auth-aside__bloom auth-aside__bloom--right"></span>
+          <span class="auth-aside__bloom auth-aside__bloom--center"></span>
+          <span class="auth-aside__bloom auth-aside__bloom--vignette"></span>
+        </div>
+        <div class="auth-aside__inner">
+          <a class="brand brand--link auth-aside__brand" href="index.html">
+            <div class="brand-mark" aria-hidden="true">HI</div>
+            <div class="brand-text">
+              <strong>HIIT ME UP</strong>
+              <span data-i18n="brand_account">Account</span>
+            </div>
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <script src="user.js"></script>
+    <script src="auth.js"></script>
+  </body>
+</html>
