@@ -232,6 +232,32 @@
 
     <div data-site-footer></div>
 
+    <div id="onboard-modal" class="onboard-modal" role="dialog" aria-modal="true" aria-labelledby="onboard-title" hidden>
+      <div class="onboard-modal__backdrop"></div>
+      <form id="form-onboard" class="onboard-modal__panel" novalidate>
+        <div>
+          <h2 id="onboard-title" class="onboard-modal__title" data-i18n="onboard_title">Almost there</h2>
+          <p class="onboard-modal__lead" data-i18n="onboard_lead">Choose the level of complexity you want to train at.</p>
+        </div>
+
+        <div class="onboard-field">
+          <div class="level-head">
+            <label for="onboard-level" class="onboard-label" data-i18n="onboard_level_label">Level of complexity</label>
+            <span id="onboard-level-text" class="level-readout" aria-hidden="true"></span>
+          </div>
+          <input id="onboard-level" class="level-range" type="range" min="1" max="5" step="1" value="3" />
+          <div class="level-range-ends" aria-hidden="true">
+            <span data-i18n="onboard_level_easy">Easy</span>
+            <span data-i18n="onboard_level_hardcore">Hardcore</span>
+          </div>
+        </div>
+
+        <button type="submit" class="profile-save onboard-submit" data-i18n="onboard_continue">Continue</button>
+      </form>
+    </div>
+
+    <script src="level-slider.js"></script>
+    <script src="onboarding.js"></script>
     <script src="promo-banner.js"></script>
     <script src="data.js"></script>
     <script src="progress.js"></script>

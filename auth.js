@@ -141,16 +141,39 @@
       });
     }
 
+    if ($("signup-health")) {
+      $("signup-health").addEventListener("change", function () {
+        $("signup-health-notes").hidden = !this.checked;
+        if (this.checked) $("signup-health-notes").focus();
+      });
+    }
+
+    var ageStepper = $("signup-age")
+      ? window.HiitAgeStepper.bind({
+          input: $("signup-age"),
+          dec: $("signup-age-dec"),
+          inc: $("signup-age-inc"),
+          error: $("signup-age-error"),
+        })
+      : null;
+
     var formSignup = $("form-signup");
     var errSignup = $("signup-error");
     if (formSignup) {
       formSignup.addEventListener("submit", function (e) {
         e.preventDefault();
-        if (window.HiitOnboarding.getStep() === 1) {
-          window.HiitOnboarding.next();
+        if (errSignup) errSignup.textContent = "";
+        var firstName = ($("signup-first-name").value || "").trim();
+        var lastName = ($("signup-last-name").value || "").trim();
+        if (!firstName || !lastName) {
+          if (errSignup) errSignup.textContent = tr("onboard_err_required", "Enter your first and last name.");
           return;
         }
-        if (errSignup) errSignup.textContent = "";
+        if (!$("signup-gender").value) {
+          if (errSignup) errSignup.textContent = tr("onboard_err_gender", "Select an option for gender.");
+          return;
+        }
+        if (ageStepper && !ageStepper.validate()) return;
         var email = ($("signup-email") && $("signup-email").value) || "";
         var p1 = ($("signup-password") && $("signup-password").value) || "";
         var p2 = ($("signup-password-confirm") && $("signup-password-confirm").value) || "";
@@ -172,14 +195,22 @@
           if (errSignup) errSignup.textContent = tr("auth_err_password_match", "Passwords do not match.");
           return;
         }
-        if (!$("onboard-terms").checked) {
+        if (!$("signup-terms").checked) {
           if (errSignup) errSignup.textContent = tr("onboard_err_terms", "You must accept the terms to continue.");
           return;
         }
         window.HiitUser.register(email, p1).then(
           function (res) {
             if (res.ok) {
-              window.HiitUser.saveOnboarding(window.HiitOnboarding.collect());
+              var health = $("signup-health").checked;
+              window.HiitUser.saveOnboarding({
+                firstName: firstName,
+                lastName: lastName,
+                gender: $("signup-gender").value,
+                age: String(ageStepper.value()),
+                healthCondition: health,
+                healthNotes: health ? $("signup-health-notes").value : "",
+              });
               window.location.replace("index.html");
               return;
             }

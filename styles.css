@@ -2801,8 +2801,8 @@ html[data-theme="light"] {
 
 .onboard-stepper__btn {
   flex: none;
-  width: 3.25rem;
-  min-height: 3.25rem;
+  width: 3rem;
+  min-height: 0;
   padding: 0;
   border-radius: 10px;
   border: 1px solid var(--border);
@@ -2834,7 +2834,7 @@ html[data-theme="light"] {
   background: var(--bg-elevated);
   color: var(--text);
   font: inherit;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-align: center;
   -moz-appearance: textfield;
@@ -3181,12 +3181,6 @@ input.level-range:focus-visible {
 }
 
 /* Onboarding: text fields, checkboxes */
-.onboard-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-
 .onboard-text,
 .profile-field textarea {
   width: 100%;
@@ -3246,27 +3240,91 @@ textarea.onboard-text,
   display: none;
 }
 
-@media (max-width: 420px) {
-  .onboard-row {
-    grid-template-columns: 1fr;
-  }
+
+
+/* Home onboarding modal (age + level) */
+html.onboard-modal-open {
+  overflow: hidden;
 }
 
-.signup-step__count {
-  margin: 0 0 0.25rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
+.onboard-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
-.signup-step {
+.onboard-modal[hidden] {
+  display: none !important;
+}
+
+.onboard-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.onboard-modal__panel {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1.5rem;
+  width: min(100%, 420px);
+  max-height: 92dvh;
+  overflow: auto;
+  padding: 1.75rem 1.5rem 1.5rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
-.signup-step[hidden] {
+.onboard-modal__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 1.65rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.onboard-modal__lead {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.onboard-submit {
+  width: 100%;
+  padding: 0.8rem 1.25rem;
+}
+
+/* Sign-up form: consistent control heights and spacing */
+.profile-field input:not([type="checkbox"]):not([type="range"]),
+.profile-field select,
+.onboard-stepper {
+  height: 2.875rem;
+}
+
+.onboard-stepper__input {
+  height: auto;
+}
+
+#form-signup > .profile-lead {
+  margin-bottom: 0;
+}
+
+#form-signup .auth-error:empty {
   display: none;
+}
+
+#form-signup .onboard-field {
+  gap: 0.35rem;
+}
+
+#form-signup .profile-actions {
+  margin-top: 0;
 }
