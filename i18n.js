@@ -1,19 +1,14 @@
 (function () {
   "use strict";
 
-  var STORAGE_KEY = "hiit-lang";
-
   var MESSAGES = {
     en: {
       menu_account: "Account menu",
-      menu_language: "Language",
       menu_log_in: "Log in",
       menu_sign_up: "Sign up",
       menu_badges: "Badges",
       menu_profile: "Profile",
       menu_log_out: "Log out",
-      lang_english: "English",
-      lang_spanish: "Español",
 
       page_title_dashboard: "HIIT · Workout board",
       page_title_badges: "Badges · HIIT",
@@ -131,6 +126,7 @@
       profile_first_name: "First name",
       profile_last_name: "Last name",
       profile_age: "Age",
+      profile_level: "Level of complexity",
       profile_gender: "Gender",
       profile_country: "Country",
       profile_email: "Email",
@@ -179,6 +175,47 @@
       auth_err_signup_unexpected:
         "Sign up failed unexpectedly. Try again, or use an external browser at the same URL.",
 
+      onboard_title: "Almost there",
+      onboard_lead: "Two quick details to finish setting up your account.",
+      onboard_age_label: "Age",
+      onboard_age_dec: "Decrease age",
+      onboard_age_inc: "Increase age",
+      onboard_level_label: "Level of complexity",
+      onboard_level_easy: "Easy",
+      onboard_level_hardcore: "Hardcore",
+      onboard_level_1: "Easy",
+      onboard_level_2: "Moderate",
+      onboard_level_3: "Challenging",
+      onboard_level_4: "Hard",
+      onboard_level_5: "Hardcore",
+      onboard_level_value: "{n} of 5 · {name}",
+      onboard_continue: "Continue",
+      onboard_err_age: "Enter an age between {min} and {max}.",
+
+      like_btn_like: "Like · {n}",
+      like_btn_unlike: "Remove like · {n}",
+
+      footer_tagline: "HIIT sessions ready for your next workout.",
+      footer_social_aria: "Social media",
+      footer_col_company: "Company",
+      footer_about: "About us",
+      footer_contact: "Contact",
+      footer_col_legal: "Legal",
+      footer_terms: "Terms and conditions",
+      footer_privacy: "Privacy policy",
+      footer_health: "Health disclaimer",
+      footer_col_explore: "Explore",
+      footer_sessions: "Sessions",
+      footer_copyright: "© {year} HIIT ME UP. All rights reserved.",
+      footer_health_note: "Talk to your doctor before starting any exercise program.",
+
+      page_title_about: "About us · HIIT",
+      page_title_contact: "Contact · HIIT",
+      page_title_terms: "Terms and conditions · HIIT",
+      page_title_privacy: "Privacy policy · HIIT",
+      page_title_health: "Health disclaimer · HIIT",
+      info_placeholder: "We are preparing this page. The full content will be available here soon.",
+
       heatmap_title: "Completion calendar",
       heatmap_sub:
         "When you finish every exercise in a session, that day is marked.",
@@ -223,24 +260,21 @@
     },
     es: {
       menu_account: "Menú de cuenta",
-      menu_language: "Idioma",
       menu_log_in: "Iniciar sesión",
       menu_sign_up: "Registrarse",
-      menu_badges: "Insignias",
+      menu_badges: "Medallas",
       menu_profile: "Perfil",
       menu_log_out: "Cerrar sesión",
-      lang_english: "English",
-      lang_spanish: "Español",
 
       page_title_dashboard: "HIIT · Tablero de entrenamiento",
-      page_title_badges: "Insignias · HIIT",
+      page_title_badges: "Medallas · HIIT",
       page_title_profile: "Perfil · HIIT",
       page_title_session: "Sesión · HIIT",
       page_title_account: "Cuenta · HIIT",
       page_title_not_found: "No encontrado · HIIT",
 
       brand_gym_floor: "Sesiones en el gym",
-      brand_badges: "Insignias",
+      brand_badges: "Medallas",
       brand_profile: "Perfil",
       brand_account: "Cuenta",
 
@@ -250,18 +284,18 @@
       theme_to_dark: "Cambiar a modo oscuro",
       theme_to_light: "Cambiar a modo claro",
 
-      header_badges_aria: "Abrir insignias",
+      header_badges_aria: "Abrir medallas",
       saved_menu_aria: "Sesiones guardadas",
       saved_heading: "Sesiones guardadas",
       saved_empty: "Aún no tienes sesiones guardadas. Toca Guardar sesión en cualquier sesión para tenerla aquí.",
       saved_btn_save: "Guardar sesión",
       saved_btn_saved: "Guardada",
-      header_badges_current: "Insignias",
+      header_badges_current: "Medallas",
 
       promo_banner_html:
-        'Novedad: <strong>Insignias</strong> — mira los récords personales que has batido y sigue superándote.',
-      promo_view_badges: "Ver insignias",
-      promo_dismiss: "Cerrar aviso de insignias",
+        'Novedad: <strong>Medallas</strong> — mira los récords personales que has batido y sigue superándote.',
+      promo_view_badges: "Ver medallas",
+      promo_dismiss: "Cerrar aviso de medallas",
 
       dash_heading: "Tablero de entrenamiento",
       metrics_heading: "Métricas",
@@ -311,11 +345,11 @@
       detail_save_aria: "Guardar y volver al tablero de entrenamiento",
       detail_view_illust: "Ver ilustración: {name}",
 
-      badges_page_title: "Tus insignias",
+      badges_page_title: "Tus medallas",
       badges_page_lead:
-        "Termina sesiones con todos los ejercicios marcados para registrar una finalización. Las insignias bloqueadas siguen ocultas hasta que alcances el hito en este dispositivo.",
+        "Termina sesiones con todos los ejercicios marcados para registrar una finalización. Las medallas bloqueadas siguen ocultas hasta que alcances el hito en este dispositivo.",
       badges_summary:
-        "{unlocked} de {total} insignias desbloqueadas — sigue terminando sesiones para iluminarlas.",
+        "{unlocked} de {total} medallas desbloqueadas — sigue terminando sesiones para iluminarlas.",
       badge_status_unlocked: "Desbloqueada",
       badge_status_locked: "Bloqueada",
 
@@ -349,6 +383,7 @@
       profile_first_name: "Nombre",
       profile_last_name: "Apellidos",
       profile_age: "Edad",
+      profile_level: "Nivel de complejidad",
       profile_gender: "Género",
       profile_country: "País",
       profile_email: "Correo",
@@ -397,6 +432,47 @@
       auth_err_signup_unexpected:
         "Error inesperado al registrarse. Inténtalo de nuevo o usa un navegador externo en la misma URL.",
 
+      onboard_title: "Ya casi",
+      onboard_lead: "Dos datos rápidos para terminar de configurar tu cuenta.",
+      onboard_age_label: "Edad",
+      onboard_age_dec: "Disminuir edad",
+      onboard_age_inc: "Aumentar edad",
+      onboard_level_label: "Nivel de complejidad",
+      onboard_level_easy: "Fácil",
+      onboard_level_hardcore: "Hardcore",
+      onboard_level_1: "Fácil",
+      onboard_level_2: "Moderado",
+      onboard_level_3: "Desafiante",
+      onboard_level_4: "Difícil",
+      onboard_level_5: "Hardcore",
+      onboard_level_value: "{n} de 5 · {name}",
+      onboard_continue: "Continuar",
+      onboard_err_age: "Introduce una edad entre {min} y {max}.",
+
+      like_btn_like: "Me gusta · {n}",
+      like_btn_unlike: "Quitar me gusta · {n}",
+
+      footer_tagline: "Sesiones HIIT listas para tu próximo entrenamiento.",
+      footer_social_aria: "Redes sociales",
+      footer_col_company: "Compañía",
+      footer_about: "Sobre nosotros",
+      footer_contact: "Contacto",
+      footer_col_legal: "Legal",
+      footer_terms: "Términos y condiciones",
+      footer_privacy: "Política de privacidad",
+      footer_health: "Aviso de salud",
+      footer_col_explore: "Explora",
+      footer_sessions: "Sesiones",
+      footer_copyright: "© {year} HIIT ME UP. Todos los derechos reservados.",
+      footer_health_note: "Consulta a tu médico antes de empezar cualquier programa de ejercicio.",
+
+      page_title_about: "Sobre nosotros · HIIT",
+      page_title_contact: "Contacto · HIIT",
+      page_title_terms: "Términos y condiciones · HIIT",
+      page_title_privacy: "Política de privacidad · HIIT",
+      page_title_health: "Aviso de salud · HIIT",
+      info_placeholder: "Estamos preparando esta página. Muy pronto encontrarás aquí el contenido completo.",
+
       heatmap_title: "Calendario de finalizaciones",
       heatmap_sub:
         "Cuando terminas todos los ejercicios de una sesión, ese día queda marcado.",
@@ -441,18 +517,13 @@
     },
   };
 
-  function normalize(lang) {
-    return lang === "es" ? "es" : "en";
-  }
-
+  /**
+   * Spanish only for the Latin American launch, so there is no language selector and no stored
+   * preference. The English bundle is kept: to bring switching back, restore the language
+   * selectors and read the choice from localStorage here.
+   */
   function getLang() {
-    try {
-      var s = localStorage.getItem(STORAGE_KEY);
-      if (s === "es" || s === "en") return s;
-    } catch (e) {
-      /* ignore */
-    }
-    return "en";
+    return "es";
   }
 
   function tf(key, vars) {
@@ -504,56 +575,16 @@
       var tk = titleEl.getAttribute("data-i18n");
       if (tk) document.title = t(tk);
     }
-    var curLang = getLang();
-    scope.querySelectorAll(".auth-lang-pill[data-hiit-set-lang]").forEach(function (btn) {
-      btn.classList.toggle(
-        "auth-lang-pill--active",
-        btn.getAttribute("data-hiit-set-lang") === curLang
-      );
-    });
-  }
-
-  function setLang(code) {
-    var lang = normalize(code);
-    try {
-      localStorage.setItem(STORAGE_KEY, lang);
-    } catch (e) {
-      /* ignore */
-    }
-    document.documentElement.setAttribute("lang", lang);
-    apply();
-    if (window.HiitTheme && typeof window.HiitTheme.syncToggleLabels === "function") {
-      window.HiitTheme.syncToggleLabels();
-    }
-    if (window.HiitUserMenu && typeof window.HiitUserMenu.refreshMenuText === "function") {
-      window.HiitUserMenu.refreshMenuText();
-    }
-    if (window.HiitUserMenu && typeof window.HiitUserMenu.syncLangPills === "function") {
-      window.HiitUserMenu.syncLangPills();
-    }
-    window.dispatchEvent(
-      new CustomEvent("hiit-langchange", { detail: { lang: lang } })
-    );
-  }
-
-  function onLangControlClick(e) {
-    var btn = e.target.closest("[data-hiit-set-lang]");
-    if (!btn) return;
-    e.preventDefault();
-    setLang(btn.getAttribute("data-hiit-set-lang"));
   }
 
   document.documentElement.setAttribute("lang", getLang());
 
   document.addEventListener("DOMContentLoaded", function () {
     apply();
-    document.addEventListener("click", onLangControlClick);
   });
 
   window.HiitI18n = {
-    STORAGE_KEY: STORAGE_KEY,
     getLang: getLang,
-    setLang: setLang,
     t: t,
     tf: tf,
     apply: apply,

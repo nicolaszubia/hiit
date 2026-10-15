@@ -40,6 +40,8 @@
     }
   }
 
+  var levelSlider = null;
+
   function fillForm() {
     if (!window.HiitUser || !window.HiitUser.loadProfile) return;
     var p = window.HiitUser.loadProfile();
@@ -57,6 +59,11 @@
       var el = $(id);
       if (el) el.value = map[id] != null ? String(map[id]) : "";
     });
+    var level = $("profile-level");
+    if (level) {
+      level.value = String(p && p.level ? p.level : 3);
+      if (levelSlider) levelSlider.render();
+    }
     applyEmailFieldState();
   }
 
@@ -71,6 +78,11 @@
       return;
     }
 
+    var levelInput = $("profile-level");
+    var levelText = $("profile-level-text");
+    if (levelInput && levelText && window.HiitLevelSlider) {
+      levelSlider = window.HiitLevelSlider.bind(levelInput, levelText);
+    }
     fillForm();
 
     var form = $("profile-form");
@@ -101,6 +113,7 @@
         firstName: ($("profile-first-name") && $("profile-first-name").value) || "",
         lastName: ($("profile-last-name") && $("profile-last-name").value) || "",
         age: ($("profile-age") && $("profile-age").value) || "",
+        level: levelInput ? levelInput.value : undefined,
         gender: ($("profile-gender") && $("profile-gender").value) || "",
         country: ($("profile-country") && $("profile-country").value) || "",
         email: email.trim(),

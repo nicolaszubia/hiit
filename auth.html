@@ -17,13 +17,6 @@
   <body class="profile-page auth-page">
     <div class="auth-split">
       <main class="profile-main auth-main">
-        <div class="auth-lang-bar" role="group" aria-labelledby="auth-lang-label">
-          <span id="auth-lang-label" class="auth-lang-bar__label" data-i18n="menu_language">Language</span>
-          <div class="auth-lang-bar__row">
-            <button type="button" class="auth-lang-pill" data-hiit-set-lang="en">English</button>
-            <button type="button" class="auth-lang-pill" data-hiit-set-lang="es">Español</button>
-          </div>
-        </div>
         <div class="auth-panels">
           <section id="auth-panel-login" class="auth-panel" aria-labelledby="auth-login-heading">
             <h1 id="auth-login-heading" class="auth-heading" data-i18n="auth_login_title">Log in</h1>
@@ -166,7 +159,73 @@
       </aside>
     </div>
 
+    <div id="onboard-modal" class="onboard-modal" role="dialog" aria-modal="true" aria-labelledby="onboard-title" hidden>
+      <div class="onboard-modal__backdrop"></div>
+      <form id="form-onboard" class="onboard-modal__panel" novalidate>
+        <div>
+          <h2 id="onboard-title" class="onboard-modal__title" data-i18n="onboard_title">Almost there</h2>
+          <p class="onboard-modal__lead" data-i18n="onboard_lead">
+            Two quick details to finish setting up your account.
+          </p>
+        </div>
+
+        <div class="onboard-field">
+          <label for="onboard-age" class="onboard-label" data-i18n="onboard_age_label">Age</label>
+          <div class="onboard-stepper">
+            <button
+              type="button"
+              id="onboard-age-dec"
+              class="onboard-stepper__btn"
+              aria-label="Decrease age"
+              data-i18n-aria-label="onboard_age_dec"
+            >
+              &minus;
+            </button>
+            <input
+              id="onboard-age"
+              class="onboard-stepper__input"
+              type="number"
+              inputmode="numeric"
+              min="13"
+              max="100"
+              step="1"
+              value="30"
+              autocomplete="off"
+            />
+            <button
+              type="button"
+              id="onboard-age-inc"
+              class="onboard-stepper__btn"
+              aria-label="Increase age"
+              data-i18n-aria-label="onboard_age_inc"
+            >
+              +
+            </button>
+          </div>
+          <p id="onboard-age-error" class="auth-error" role="alert" aria-live="polite"></p>
+        </div>
+
+        <div class="onboard-field">
+          <div class="level-head">
+            <label for="onboard-level" class="onboard-label" data-i18n="onboard_level_label">
+              Level of complexity
+            </label>
+            <span id="onboard-level-text" class="level-readout" aria-hidden="true"></span>
+          </div>
+          <input id="onboard-level" class="level-range" type="range" min="1" max="5" step="1" value="3" />
+          <div class="level-range-ends" aria-hidden="true">
+            <span data-i18n="onboard_level_easy">Easy</span>
+            <span data-i18n="onboard_level_hardcore">Hardcore</span>
+          </div>
+        </div>
+
+        <button type="submit" class="profile-save onboard-submit" data-i18n="onboard_continue">Continue</button>
+      </form>
+    </div>
+
     <script src="user.js"></script>
+    <script src="level-slider.js"></script>
+    <script src="onboarding.js"></script>
     <script src="auth.js"></script>
   </body>
 </html>

@@ -11,12 +11,6 @@
     );
   }
 
-  function langPillClass(code) {
-    var cur = window.HiitI18n && window.HiitI18n.getLang ? window.HiitI18n.getLang() : "en";
-    var active = cur === code ? " user-menu__lang-pill--active" : "";
-    return "user-menu__lang-pill" + active;
-  }
-
   function createUserMenuMarkup() {
     return (
       '<button type="button" class="user-menu__trigger" aria-haspopup="true" aria-expanded="false" aria-label="' +
@@ -26,22 +20,6 @@
       userIconSvg() +
       "</button>" +
       '<div class="user-menu__dropdown" role="menu" hidden>' +
-      '<div class="user-menu__lang" role="group" aria-labelledby="user-menu-lang-h">' +
-      '<span id="user-menu-lang-h" class="user-menu__lang-heading">' +
-      escapeHtml(tt("menu_language", "Language")) +
-      "</span>" +
-      '<div class="user-menu__lang-row">' +
-      '<button type="button" class="' +
-      langPillClass("en") +
-      '" data-hiit-set-lang="en" role="menuitem">' +
-      escapeHtml(tt("lang_english", "English")) +
-      "</button>" +
-      '<button type="button" class="' +
-      langPillClass("es") +
-      '" data-hiit-set-lang="es" role="menuitem">' +
-      escapeHtml(tt("lang_spanish", "Español")) +
-      "</button>" +
-      "</div></div>" +
       '<a href="auth.html#login" class="user-menu__item user-menu__item--guest" role="menuitem">' +
       escapeHtml(tt("menu_log_in", "Log in")) +
       "</a>" +
@@ -73,25 +51,11 @@
     return escapeHtml(s).replace(/'/g, "&#39;");
   }
 
-  function syncLangPillsInRoot(root) {
-    if (!root) return;
-    var cur = window.HiitI18n && window.HiitI18n.getLang ? window.HiitI18n.getLang() : "en";
-    root.querySelectorAll("[data-hiit-set-lang].user-menu__lang-pill").forEach(function (btn) {
-      var code = btn.getAttribute("data-hiit-set-lang");
-      btn.classList.toggle("user-menu__lang-pill--active", code === cur);
-    });
-  }
-
   function refreshMenuTextInRoot(root) {
     if (!root || !window.HiitI18n || !window.HiitI18n.t) return;
     var t = window.HiitI18n.t;
     var trigger = root.querySelector(".user-menu__trigger");
     if (trigger) trigger.setAttribute("aria-label", t("menu_account"));
-    var h = root.querySelector("#user-menu-lang-h");
-    if (h) h.textContent = t("menu_language");
-    var pills = root.querySelectorAll(".user-menu__lang-row [data-hiit-set-lang]");
-    if (pills[0]) pills[0].textContent = t("lang_english");
-    if (pills[1]) pills[1].textContent = t("lang_spanish");
     var items = root.querySelectorAll(".user-menu__item");
     items.forEach(function (el) {
       var href = el.getAttribute("href") || "";
@@ -101,7 +65,6 @@
       else if (href === "profile.html") el.textContent = t("menu_profile");
       else if (el.hasAttribute("data-user-logout")) el.textContent = t("menu_log_out");
     });
-    syncLangPillsInRoot(root);
   }
 
   function syncAvatar(root) {
@@ -190,7 +153,6 @@
     });
 
     syncAvatar(root);
-    syncLangPillsInRoot(root);
   }
 
   function onDocClick(e) {
@@ -232,9 +194,6 @@
     },
     refreshMenuText: function () {
       document.querySelectorAll(".user-menu").forEach(refreshMenuTextInRoot);
-    },
-    syncLangPills: function () {
-      document.querySelectorAll(".user-menu").forEach(syncLangPillsInRoot);
     },
   };
 

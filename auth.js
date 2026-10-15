@@ -171,7 +171,8 @@
         window.HiitUser.register(email, p1).then(
           function (res) {
             if (res.ok) {
-              window.location.replace("profile.html");
+              // New accounts finish onboarding (age + level) in a modal, which then sends them home.
+              window.HiitOnboarding.open();
               return;
             }
             if (errSignup) errSignup.textContent = res.error || tr("auth_err_signup", "Could not sign up.");

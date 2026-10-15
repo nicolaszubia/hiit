@@ -433,7 +433,12 @@
     titleRow.appendChild(headline);
     titleRow.appendChild(shareBlock);
 
-    article.appendChild(idP);
+    var topRow = document.createElement("div");
+    topRow.className = "detail-top";
+    topRow.appendChild(idP);
+    if (window.HiitLikes) topRow.appendChild(window.HiitLikes.createButton(card.id, { large: true }));
+
+    article.appendChild(topRow);
     article.appendChild(titleRow);
 
     var QR_SIZE = 96;

@@ -90,6 +90,17 @@
             <input id="profile-age" name="age" type="number" min="1" max="120" inputmode="numeric" />
           </div>
           <div class="profile-field">
+            <div class="level-head">
+              <label for="profile-level" data-i18n="profile_level">Level of complexity</label>
+              <span id="profile-level-text" class="level-readout" aria-hidden="true"></span>
+            </div>
+            <input id="profile-level" name="level" class="level-range" type="range" min="1" max="5" step="1" value="3" />
+            <div class="level-range-ends" aria-hidden="true">
+              <span data-i18n="onboard_level_easy">Easy</span>
+              <span data-i18n="onboard_level_hardcore">Hardcore</span>
+            </div>
+          </div>
+          <div class="profile-field">
             <label for="profile-gender" data-i18n="profile_gender">Gender</label>
             <select id="profile-gender" name="gender" autocomplete="sex">
               <option value="" data-i18n="profile_select">Select…</option>
@@ -171,10 +182,14 @@
       </div>
     </main>
 
+    <div data-site-footer></div>
+
     <script src="user.js"></script>
     <script src="user-menu.js"></script>
     <script src="data.js"></script>
     <script src="saved.js"></script>
+    <script src="level-slider.js"></script>
     <script src="profile.js"></script>
+    <script src="footer.js"></script>
   </body>
 </html>

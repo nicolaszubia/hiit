@@ -64,6 +64,14 @@
       ' <span aria-hidden="true">→</span></span>' +
       "</div>";
 
+    // The like button is a sibling of the link (not inside it) so the card stays valid, accessible HTML.
+    var item = document.createElement("div");
+    item.className = "card-item";
+    var top = document.createElement("div");
+    top.className = "card-item__top";
+    item.appendChild(a);
+    item.appendChild(top);
+
     var checks = hp.getChecksForCard(card.id, card.exercises.length);
     var n = card.exercises.length;
 
@@ -73,7 +81,7 @@
       badgeDone.className = "card-done-badge card-done-badge--complete";
       badgeDone.id = "card-badge-complete-" + String(card.id);
       badgeDone.textContent = tr("card_badge_complete", "Complete");
-      a.insertBefore(badgeDone, a.firstChild);
+      top.appendChild(badgeDone);
       a.setAttribute("aria-describedby", badgeDone.id);
     } else if (section === "remaining" && n > 0 && hp.isMajorityComplete(checks) && !hp.isFullyComplete(checks)) {
       a.classList.add("card--majority-done");
@@ -81,11 +89,13 @@
       badge.className = "card-done-badge";
       badge.id = "card-badge-" + String(card.id);
       badge.textContent = tr("card_badge_mostly", "Mostly done");
-      a.insertBefore(badge, a.firstChild);
+      top.appendChild(badge);
       a.setAttribute("aria-describedby", badge.id);
     }
 
-    return a;
+    if (window.HiitLikes) top.appendChild(window.HiitLikes.createButton(card.id));
+
+    return item;
   }
 
   function renderMetrics(completedCount, remainingCount) {

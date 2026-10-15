@@ -197,10 +197,17 @@
     return acc ? String(acc.email) : "";
   }
 
+  /** Level of complexity, 1 (easy) to 5 (hardcore); null when unset or out of range. */
+  function normalizeLevel(value) {
+    var n = parseInt(value, 10);
+    return n >= 1 && n <= 5 ? n : null;
+  }
+
   function saveProfile(data) {
     var accEmail = getAccountEmail();
     var emailOut =
       isSessionActive() && accEmail ? accEmail : String(data.email || "").trim();
+    var prev = loadProfile();
     var o = {
       firstName: String(data.firstName || "").trim(),
       lastName: String(data.lastName || "").trim(),
@@ -209,12 +216,22 @@
       country: String(data.country || "").trim(),
       email: emailOut,
       phone: String(data.phone || "").trim(),
+      // Keep the stored level when the caller doesn't pass one.
+      level: data.level != null ? normalizeLevel(data.level) : prev ? normalizeLevel(prev.level) : null,
       signedIn: true,
     };
     try {
       localStorage.setItem(PROFILE_KEY, JSON.stringify(o));
     } catch (e) {}
     return o;
+  }
+
+  /** Sign-up onboarding: store age and level without touching the other profile fields. */
+  function saveOnboarding(age, level) {
+    var merged = loadProfile() || {};
+    merged.age = age;
+    merged.level = level;
+    return saveProfile(merged);
   }
 
   function clearProfile() {
@@ -330,6 +347,7 @@
     resetPassword: resetPassword,
     loadProfile: loadProfile,
     saveProfile: saveProfile,
+    saveOnboarding: saveOnboarding,
     clearProfile: clearProfile,
     loadAccount: loadAccount,
     getAccountEmail: getAccountEmail,
