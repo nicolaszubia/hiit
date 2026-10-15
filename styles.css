@@ -2809,8 +2809,8 @@ html.onboard-modal-open {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  width: min(100%, 420px);
+  gap: 1.15rem;
+  width: min(100%, 440px);
   max-height: 92dvh;
   overflow: auto;
   padding: 1.75rem 1.5rem 1.5rem;
@@ -3237,4 +3237,76 @@ input.level-range:focus-visible {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: var(--gap);
+}
+
+/* Onboarding: text fields, checkboxes */
+.onboard-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.onboard-text,
+.profile-field textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+textarea.onboard-text,
+.profile-field textarea {
+  resize: vertical;
+}
+
+.onboard-text:focus-visible,
+.profile-field textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.onboard-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.profile-field label.onboard-check {
+  font-size: 0.88rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.onboard-check input {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  accent-color: var(--accent);
+}
+
+.onboard-check a {
+  color: var(--accent);
+}
+
+.onboard-field textarea[hidden],
+.profile-field textarea[hidden] {
+  display: none;
+}
+
+@media (max-width: 420px) {
+  .onboard-row {
+    grid-template-columns: 1fr;
+  }
 }

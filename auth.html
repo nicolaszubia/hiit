@@ -165,8 +165,31 @@
         <div>
           <h2 id="onboard-title" class="onboard-modal__title" data-i18n="onboard_title">Almost there</h2>
           <p class="onboard-modal__lead" data-i18n="onboard_lead">
-            Two quick details to finish setting up your account.
+            A few quick details to finish setting up your account.
           </p>
+        </div>
+
+        <div class="onboard-row">
+          <div class="onboard-field">
+            <label for="onboard-first-name" class="onboard-label" data-i18n="profile_first_name">First name</label>
+            <input id="onboard-first-name" class="onboard-text" type="text" autocomplete="given-name" maxlength="60" />
+          </div>
+          <div class="onboard-field">
+            <label for="onboard-last-name" class="onboard-label" data-i18n="profile_last_name">Last name</label>
+            <input id="onboard-last-name" class="onboard-text" type="text" autocomplete="family-name" maxlength="60" />
+          </div>
+        </div>
+
+        <div class="onboard-field">
+          <label for="onboard-gender" class="onboard-label" data-i18n="profile_gender">Gender</label>
+          <select id="onboard-gender" class="onboard-text">
+            <option value="" data-i18n="profile_select">Select…</option>
+            <option value="female" data-i18n="profile_gender_female">Female</option>
+            <option value="male" data-i18n="profile_gender_male">Male</option>
+            <option value="non-binary" data-i18n="profile_gender_nb">Non-binary</option>
+            <option value="other" data-i18n="profile_gender_other">Other</option>
+            <option value="prefer-not" data-i18n="profile_gender_prefer_not">Prefer not to say</option>
+          </select>
         </div>
 
         <div class="onboard-field">
@@ -218,6 +241,34 @@
             <span data-i18n="onboard_level_hardcore">Hardcore</span>
           </div>
         </div>
+
+        <div class="onboard-field">
+          <label class="onboard-check">
+            <input id="onboard-health" type="checkbox" />
+            <span data-i18n="onboard_health_label">I have a medical condition, injury or illness</span>
+          </label>
+          <textarea
+            id="onboard-health-notes"
+            class="onboard-text"
+            rows="2"
+            maxlength="300"
+            hidden
+            placeholder="Tell us briefly (optional)"
+            data-i18n-placeholder="onboard_health_notes"
+            aria-label="Tell us briefly (optional)"
+            data-i18n-aria-label="onboard_health_notes"
+          ></textarea>
+        </div>
+
+        <label class="onboard-check">
+          <input id="onboard-terms" type="checkbox" />
+          <span data-i18n-html="onboard_terms">
+            I accept the <a href="terms.html" target="_blank" rel="noopener">terms</a> and the
+            <a href="health-disclaimer.html" target="_blank" rel="noopener">health disclaimer</a>
+          </span>
+        </label>
+
+        <p id="onboard-error" class="auth-error" role="alert" aria-live="polite"></p>
 
         <button type="submit" class="profile-save onboard-submit" data-i18n="onboard_continue">Continue</button>
       </form>

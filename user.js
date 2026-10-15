@@ -218,19 +218,24 @@
       phone: String(data.phone || "").trim(),
       // Keep the stored level when the caller doesn't pass one.
       level: data.level != null ? normalizeLevel(data.level) : prev ? normalizeLevel(prev.level) : null,
+      healthCondition: data.healthCondition != null ? !!data.healthCondition : !!(prev && prev.healthCondition),
+      healthNotes:
+        data.healthNotes != null ? String(data.healthNotes).trim() : prev ? String(prev.healthNotes || "") : "",
       signedIn: true,
     };
+    if (!o.healthCondition) o.healthNotes = "";
     try {
       localStorage.setItem(PROFILE_KEY, JSON.stringify(o));
     } catch (e) {}
     return o;
   }
 
-  /** Sign-up onboarding: store age and level without touching the other profile fields. */
-  function saveOnboarding(age, level) {
+  /** Sign-up onboarding: store the collected fields without touching the rest of the profile. */
+  function saveOnboarding(fields) {
     var merged = loadProfile() || {};
-    merged.age = age;
-    merged.level = level;
+    Object.keys(fields).forEach(function (k) {
+      merged[k] = fields[k];
+    });
     return saveProfile(merged);
   }
 

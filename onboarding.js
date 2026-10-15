@@ -70,8 +70,26 @@
     ageInput.select();
   }
 
+  function val(id) {
+    return $(id).value.trim();
+  }
+
+  function showError(key, focusId) {
+    $("onboard-error").textContent = window.HiitI18n.t(key);
+    $(focusId).focus();
+  }
+
   function onSubmit(e) {
     e.preventDefault();
+    $("onboard-error").textContent = "";
+    if (!val("onboard-first-name") || !val("onboard-last-name")) {
+      showError("onboard_err_required", val("onboard-first-name") ? "onboard-last-name" : "onboard-first-name");
+      return;
+    }
+    if (!$("onboard-gender").value) {
+      showError("onboard_err_gender", "onboard-gender");
+      return;
+    }
     var age = parseAge();
     if (age === null) {
       ageErrorShown = true;
@@ -79,7 +97,20 @@
       ageInput.focus();
       return;
     }
-    window.HiitUser.saveOnboarding(String(age), parseInt(levelInput.value, 10));
+    if (!$("onboard-terms").checked) {
+      showError("onboard_err_terms", "onboard-terms");
+      return;
+    }
+    var health = $("onboard-health").checked;
+    window.HiitUser.saveOnboarding({
+      firstName: val("onboard-first-name"),
+      lastName: val("onboard-last-name"),
+      gender: $("onboard-gender").value,
+      age: String(age),
+      level: parseInt(levelInput.value, 10),
+      healthCondition: health,
+      healthNotes: health ? val("onboard-health-notes") : "",
+    });
     window.location.replace("index.html");
   }
 
@@ -116,6 +147,10 @@
       syncStepper();
     });
     window.HiitLevelSlider.bind(levelInput, levelText);
+    $("onboard-health").addEventListener("change", function () {
+      $("onboard-health-notes").hidden = !this.checked;
+      if (this.checked) $("onboard-health-notes").focus();
+    });
     form.addEventListener("submit", onSubmit);
 
     window.addEventListener("hiit-langchange", renderAgeError);

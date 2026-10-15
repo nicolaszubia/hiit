@@ -101,6 +101,22 @@
             </div>
           </div>
           <div class="profile-field">
+            <label class="onboard-check">
+              <input id="profile-health" type="checkbox" />
+              <span data-i18n="profile_health_label">Medical condition, injury or illness</span>
+            </label>
+            <textarea
+              id="profile-health-notes"
+              rows="2"
+              maxlength="300"
+              hidden
+              aria-label="Tell us briefly (optional)"
+              data-i18n-aria-label="onboard_health_notes"
+              placeholder="Tell us briefly (optional)"
+              data-i18n-placeholder="onboard_health_notes"
+            ></textarea>
+          </div>
+          <div class="profile-field">
             <label for="profile-gender" data-i18n="profile_gender">Gender</label>
             <select id="profile-gender" name="gender" autocomplete="sex">
               <option value="" data-i18n="profile_select">Select…</option>

@@ -64,6 +64,12 @@
       level.value = String(p && p.level ? p.level : 3);
       if (levelSlider) levelSlider.render();
     }
+    var health = $("profile-health");
+    if (health) {
+      health.checked = !!(p && p.healthCondition);
+      $("profile-health-notes").hidden = !health.checked;
+      $("profile-health-notes").value = p && p.healthNotes ? p.healthNotes : "";
+    }
     applyEmailFieldState();
   }
 
@@ -84,6 +90,11 @@
       levelSlider = window.HiitLevelSlider.bind(levelInput, levelText);
     }
     fillForm();
+    if ($("profile-health")) {
+      $("profile-health").addEventListener("change", function () {
+        $("profile-health-notes").hidden = !this.checked;
+      });
+    }
 
     var form = $("profile-form");
     var status = $("profile-status");
@@ -114,6 +125,8 @@
         lastName: ($("profile-last-name") && $("profile-last-name").value) || "",
         age: ($("profile-age") && $("profile-age").value) || "",
         level: levelInput ? levelInput.value : undefined,
+        healthCondition: $("profile-health") ? $("profile-health").checked : undefined,
+        healthNotes: $("profile-health-notes") ? $("profile-health-notes").value : undefined,
         gender: ($("profile-gender") && $("profile-gender").value) || "",
         country: ($("profile-country") && $("profile-country").value) || "",
         email: email.trim(),

@@ -176,7 +176,15 @@
         "Sign up failed unexpectedly. Try again, or use an external browser at the same URL.",
 
       onboard_title: "Almost there",
-      onboard_lead: "Two quick details to finish setting up your account.",
+      onboard_lead: "A few quick details to finish setting up your account.",
+      onboard_health_label: "I have a medical condition, injury or illness",
+      onboard_health_notes: "Tell us briefly (optional)",
+      onboard_terms:
+        'I accept the <a href="terms.html" target="_blank" rel="noopener">terms</a> and the <a href="health-disclaimer.html" target="_blank" rel="noopener">health disclaimer</a>',
+      onboard_err_required: "Enter your first and last name.",
+      onboard_err_gender: "Select an option for gender.",
+      onboard_err_terms: "You must accept the terms to continue.",
+      profile_health_label: "Medical condition, injury or illness",
       onboard_age_label: "Age",
       onboard_age_dec: "Decrease age",
       onboard_age_inc: "Increase age",
@@ -434,7 +442,15 @@
         "Error inesperado al registrarse. Inténtalo de nuevo o usa un navegador externo en la misma URL.",
 
       onboard_title: "Ya casi",
-      onboard_lead: "Dos datos rápidos para terminar de configurar tu cuenta.",
+      onboard_lead: "Unos datos rápidos para terminar de configurar tu cuenta.",
+      onboard_health_label: "Tengo una condición médica, lesión o enfermedad",
+      onboard_health_notes: "Cuéntanos brevemente (opcional)",
+      onboard_terms:
+        'Acepto los <a href="terms.html" target="_blank" rel="noopener">términos</a> y el <a href="health-disclaimer.html" target="_blank" rel="noopener">aviso de salud</a>',
+      onboard_err_required: "Introduce tu nombre y apellido.",
+      onboard_err_gender: "Selecciona una opción de género.",
+      onboard_err_terms: "Debes aceptar los términos para continuar.",
+      profile_health_label: "Condición médica, lesión o enfermedad",
       onboard_age_label: "Edad",
       onboard_age_dec: "Disminuir edad",
       onboard_age_inc: "Aumentar edad",
