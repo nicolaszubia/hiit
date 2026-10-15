@@ -2779,60 +2779,6 @@ html[data-theme="light"] {
 }
 
 /* Sign-up onboarding modal: age stepper + level-of-complexity slider */
-html.onboard-modal-open {
-  overflow: hidden;
-}
-
-.onboard-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-
-.onboard-modal[hidden] {
-  display: none !important;
-}
-
-.onboard-modal__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-}
-
-.onboard-modal__panel {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
-  width: min(100%, 440px);
-  max-height: 92dvh;
-  overflow: auto;
-  padding: 1.75rem 1.5rem 1.5rem;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
-
-.onboard-modal__title {
-  margin: 0;
-  font-size: clamp(1.35rem, 3vw, 1.65rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-}
-
-.onboard-modal__lead {
-  margin: 0.35rem 0 0;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
 .onboard-field {
   display: flex;
   flex-direction: column;
@@ -3000,11 +2946,6 @@ input.level-range:focus-visible {
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--muted);
-}
-
-.onboard-submit {
-  width: 100%;
-  padding: 0.8rem 1.25rem;
 }
 
 /* Fire (like) button: session cards and detail page */
@@ -3309,4 +3250,23 @@ textarea.onboard-text,
   .onboard-row {
     grid-template-columns: 1fr;
   }
+}
+
+.signup-step__count {
+  margin: 0 0 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.signup-step {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.signup-step[hidden] {
+  display: none;
 }

@@ -175,8 +175,6 @@
       auth_err_signup_unexpected:
         "Sign up failed unexpectedly. Try again, or use an external browser at the same URL.",
 
-      onboard_title: "Almost there",
-      onboard_lead: "A few quick details to finish setting up your account.",
       onboard_health_label: "I have a medical condition, injury or illness",
       onboard_health_notes: "Tell us briefly (optional)",
       onboard_terms:
@@ -185,6 +183,9 @@
       onboard_err_gender: "Select an option for gender.",
       onboard_err_terms: "You must accept the terms to continue.",
       profile_health_label: "Medical condition, injury or illness",
+      signup_step: "Step {n} of 2",
+      signup_step1_lead: "Tell us a bit about you.",
+      signup_back: "Back",
       onboard_age_label: "Age",
       onboard_age_dec: "Decrease age",
       onboard_age_inc: "Increase age",
@@ -441,8 +442,6 @@
       auth_err_signup_unexpected:
         "Error inesperado al registrarse. Inténtalo de nuevo o usa un navegador externo en la misma URL.",
 
-      onboard_title: "Ya casi",
-      onboard_lead: "Unos datos rápidos para terminar de configurar tu cuenta.",
       onboard_health_label: "Tengo una condición médica, lesión o enfermedad",
       onboard_health_notes: "Cuéntanos brevemente (opcional)",
       onboard_terms:
@@ -451,6 +450,9 @@
       onboard_err_gender: "Selecciona una opción de género.",
       onboard_err_terms: "Debes aceptar los términos para continuar.",
       profile_health_label: "Condición médica, lesión o enfermedad",
+      signup_step: "Paso {n} de 2",
+      signup_step1_lead: "Cuéntanos un poco sobre ti.",
+      signup_back: "Atrás",
       onboard_age_label: "Edad",
       onboard_age_dec: "Disminuir edad",
       onboard_age_inc: "Aumentar edad",

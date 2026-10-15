@@ -2,12 +2,11 @@
   "use strict";
 
   /**
-   * Sign-up onboarding modal: age (− N +) and level of complexity (1–5 slider).
-   * Shown by auth.js right after the account is created; saving sends the user to the home page.
+   * Sign-up step 1 (before the account is created): name, gender, age (− N +), level (1–5 slider)
+   * and health condition. auth.js creates the account in step 2 and saves collect() to the profile.
    */
 
-  var modal;
-  var form;
+  var step = 1;
   var ageInput;
   var decBtn;
   var incBtn;
@@ -22,8 +21,16 @@
     return document.getElementById(id);
   }
 
+  function t(key) {
+    return window.HiitI18n && window.HiitI18n.t ? window.HiitI18n.t(key) : key;
+  }
+
   function tf(key, vars) {
     return window.HiitI18n && window.HiitI18n.tf ? window.HiitI18n.tf(key, vars) : key;
+  }
+
+  function val(id) {
+    return $(id).value.trim();
   }
 
   /** The typed age as an integer, or null when empty, non-numeric or out of range. */
@@ -58,79 +65,77 @@
     syncStepper();
   }
 
-  function open() {
-    if (!modal) return;
-    var page = document.querySelector(".auth-split");
-    // inert keeps keyboard focus and screen readers inside the modal.
-    if (page) page.inert = true;
-    modal.hidden = false;
-    document.documentElement.classList.add("onboard-modal-open");
-    syncStepper();
-    ageInput.focus();
-    ageInput.select();
-  }
-
-  function val(id) {
-    return $(id).value.trim();
-  }
-
   function showError(key, focusId) {
-    $("onboard-error").textContent = window.HiitI18n.t(key);
+    $("onboard-error").textContent = t(key);
     $(focusId).focus();
   }
 
-  function onSubmit(e) {
-    e.preventDefault();
+  /** Validates step 1; shows the first problem found. */
+  function validate() {
     $("onboard-error").textContent = "";
     if (!val("onboard-first-name") || !val("onboard-last-name")) {
       showError("onboard_err_required", val("onboard-first-name") ? "onboard-last-name" : "onboard-first-name");
-      return;
+      return false;
     }
     if (!$("onboard-gender").value) {
       showError("onboard_err_gender", "onboard-gender");
-      return;
+      return false;
     }
-    var age = parseAge();
-    if (age === null) {
+    if (parseAge() === null) {
       ageErrorShown = true;
       renderAgeError();
       ageInput.focus();
-      return;
+      return false;
     }
-    if (!$("onboard-terms").checked) {
-      showError("onboard_err_terms", "onboard-terms");
-      return;
-    }
+    return true;
+  }
+
+  function renderStepCounts() {
+    $("signup-step-count-1").textContent = tf("signup_step", { n: 1 });
+    $("signup-step-count-2").textContent = tf("signup_step", { n: 2 });
+  }
+
+  function showStep(n) {
+    step = n;
+    $("signup-error").textContent = "";
+    $("signup-step-1").hidden = n !== 1;
+    $("signup-step-2").hidden = n !== 2;
+    var focusId = n === 1 ? "onboard-first-name" : "signup-email";
+    $(focusId).focus();
+  }
+
+  /** Step 1 -> step 2 when the data is valid. */
+  function next() {
+    if (validate()) showStep(2);
+  }
+
+  /** Fields to save to the profile once the account exists. */
+  function collect() {
     var health = $("onboard-health").checked;
-    window.HiitUser.saveOnboarding({
+    return {
       firstName: val("onboard-first-name"),
       lastName: val("onboard-last-name"),
       gender: $("onboard-gender").value,
-      age: String(age),
+      age: String(parseAge()),
       level: parseInt(levelInput.value, 10),
       healthCondition: health,
       healthNotes: health ? val("onboard-health-notes") : "",
-    });
-    window.location.replace("index.html");
+    };
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    modal = $("onboard-modal");
-    form = $("form-onboard");
     ageInput = $("onboard-age");
+    if (!ageInput || !$("signup-step-1")) return;
     decBtn = $("onboard-age-dec");
     incBtn = $("onboard-age-inc");
     ageError = $("onboard-age-error");
     levelInput = $("onboard-level");
-    var levelText = $("onboard-level-text");
-    if (!modal || !form || !ageInput || !decBtn || !incBtn || !ageError || !levelInput || !levelText) {
-      modal = null;
-      return;
-    }
 
     minAge = parseInt(ageInput.min, 10);
     maxAge = parseInt(ageInput.max, 10);
     lastValidAge = parseInt(ageInput.value, 10);
+    syncStepper();
+    renderStepCounts();
 
     decBtn.addEventListener("click", function () {
       stepAge(-1);
@@ -146,15 +151,22 @@
       if (!ageInput.value.trim()) ageInput.value = String(lastValidAge);
       syncStepper();
     });
-    window.HiitLevelSlider.bind(levelInput, levelText);
+    window.HiitLevelSlider.bind(levelInput, $("onboard-level-text"));
     $("onboard-health").addEventListener("change", function () {
       $("onboard-health-notes").hidden = !this.checked;
       if (this.checked) $("onboard-health-notes").focus();
     });
-    form.addEventListener("submit", onSubmit);
-
-    window.addEventListener("hiit-langchange", renderAgeError);
+    $("signup-next").addEventListener("click", next);
+    $("signup-back").addEventListener("click", function () {
+      showStep(1);
+    });
   });
 
-  window.HiitOnboarding = { open: open };
+  window.HiitOnboarding = {
+    getStep: function () {
+      return step;
+    },
+    next: next,
+    collect: collect,
+  };
 })();

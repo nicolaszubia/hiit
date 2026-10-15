@@ -146,6 +146,10 @@
     if (formSignup) {
       formSignup.addEventListener("submit", function (e) {
         e.preventDefault();
+        if (window.HiitOnboarding.getStep() === 1) {
+          window.HiitOnboarding.next();
+          return;
+        }
         if (errSignup) errSignup.textContent = "";
         var email = ($("signup-email") && $("signup-email").value) || "";
         var p1 = ($("signup-password") && $("signup-password").value) || "";
@@ -168,11 +172,15 @@
           if (errSignup) errSignup.textContent = tr("auth_err_password_match", "Passwords do not match.");
           return;
         }
+        if (!$("onboard-terms").checked) {
+          if (errSignup) errSignup.textContent = tr("onboard_err_terms", "You must accept the terms to continue.");
+          return;
+        }
         window.HiitUser.register(email, p1).then(
           function (res) {
             if (res.ok) {
-              // New accounts finish onboarding (age + level) in a modal, which then sends them home.
-              window.HiitOnboarding.open();
+              window.HiitUser.saveOnboarding(window.HiitOnboarding.collect());
+              window.location.replace("index.html");
               return;
             }
             if (errSignup) errSignup.textContent = res.error || tr("auth_err_signup", "Could not sign up.");
