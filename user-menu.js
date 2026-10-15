@@ -26,8 +26,8 @@
       '<a href="auth.html#signup" class="user-menu__item user-menu__item--guest" role="menuitem">' +
       escapeHtml(tt("menu_sign_up", "Sign up")) +
       "</a>" +
-      '<a href="badges.html" class="user-menu__item" role="menuitem">' +
-      escapeHtml(tt("menu_badges", "Badges")) +
+      '<a href="saved.html" class="user-menu__item user-menu__item--authed" role="menuitem">' +
+      escapeHtml(tt("menu_saved", "Saved sessions")) +
       "</a>" +
       '<a href="profile.html" class="user-menu__item user-menu__item--authed" role="menuitem">' +
       escapeHtml(tt("menu_profile", "Profile")) +
@@ -61,7 +61,7 @@
       var href = el.getAttribute("href") || "";
       if (href.indexOf("auth.html#login") !== -1) el.textContent = t("menu_log_in");
       else if (href.indexOf("auth.html#signup") !== -1) el.textContent = t("menu_sign_up");
-      else if (href === "badges.html") el.textContent = t("menu_badges");
+      else if (href === "saved.html") el.textContent = t("menu_saved");
       else if (href === "profile.html") el.textContent = t("menu_profile");
       else if (el.hasAttribute("data-user-logout")) el.textContent = t("menu_log_out");
     });
@@ -145,7 +145,7 @@
     }
 
     dropdown.querySelectorAll(
-      'a[href="profile.html"], a[href="badges.html"], a[href^="auth.html"]'
+      'a[href="profile.html"], a[href="saved.html"], a[href^="auth.html"]'
     ).forEach(function (link) {
       link.addEventListener("click", function () {
         closeMenu(root);

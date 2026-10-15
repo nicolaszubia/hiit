@@ -7,6 +7,7 @@
       menu_log_in: "Log in",
       menu_sign_up: "Sign up",
       menu_badges: "Badges",
+      menu_saved: "Saved sessions",
       menu_profile: "Profile",
       menu_log_out: "Log out",
 
@@ -43,7 +44,6 @@
 
       dash_heading: "Workout dashboard",
       metrics_heading: "Metrics",
-      metrics_sub: "Progress across all sessions on this device.",
       metrics_collapse: "Collapse Metrics section",
       metrics_expand: "Expand Metrics section",
       heatmap_section_aria: "Completion calendar by day",
@@ -210,6 +210,7 @@
       footer_health_note: "Talk to your doctor before starting any exercise program.",
 
       page_title_about: "About us · HIIT",
+      page_title_saved: "Saved sessions · HIIT",
       page_title_contact: "Contact · HIIT",
       page_title_terms: "Terms and conditions · HIIT",
       page_title_privacy: "Privacy policy · HIIT",
@@ -219,11 +220,11 @@
       heatmap_title: "Completion calendar",
       heatmap_sub:
         "When you finish every exercise in a session, that day is marked.",
-      heatmap_month_group: "Month",
-      heatmap_prev_month: "Previous month",
-      heatmap_next_month: "Next month",
+      heatmap_week_group: "Week",
+      heatmap_prev_week: "Previous week",
+      heatmap_next_week: "Next week",
       heatmap_today: "Today",
-      heatmap_today_aria: "Go to current month and scroll to today",
+      heatmap_today_aria: "Go to the current week",
       heatmap_less: "Less",
       bm_section_aria: "Muscle map",
       bm_title: "Muscle map",
@@ -263,6 +264,7 @@
       menu_log_in: "Iniciar sesión",
       menu_sign_up: "Registrarse",
       menu_badges: "Medallas",
+      menu_saved: "Sesiones guardadas",
       menu_profile: "Perfil",
       menu_log_out: "Cerrar sesión",
 
@@ -299,7 +301,6 @@
 
       dash_heading: "Tablero de entrenamiento",
       metrics_heading: "Métricas",
-      metrics_sub: "Progreso de todas las sesiones en este dispositivo.",
       metrics_collapse: "Contraer sección Métricas",
       metrics_expand: "Expandir sección Métricas",
       heatmap_section_aria: "Calendario de finalizaciones por día",
@@ -467,6 +468,7 @@
       footer_health_note: "Consulta a tu médico antes de empezar cualquier programa de ejercicio.",
 
       page_title_about: "Sobre nosotros · HIIT",
+      page_title_saved: "Sesiones guardadas · HIIT",
       page_title_contact: "Contacto · HIIT",
       page_title_terms: "Términos y condiciones · HIIT",
       page_title_privacy: "Política de privacidad · HIIT",
@@ -476,11 +478,11 @@
       heatmap_title: "Calendario de finalizaciones",
       heatmap_sub:
         "Cuando terminas todos los ejercicios de una sesión, ese día queda marcado.",
-      heatmap_month_group: "Mes",
-      heatmap_prev_month: "Mes anterior",
-      heatmap_next_month: "Mes siguiente",
+      heatmap_week_group: "Semana",
+      heatmap_prev_week: "Semana anterior",
+      heatmap_next_week: "Semana siguiente",
       heatmap_today: "Hoy",
-      heatmap_today_aria: "Ir al mes actual y desplazarse a hoy",
+      heatmap_today_aria: "Ir a la semana actual",
       heatmap_less: "Menos",
       bm_section_aria: "Mapa muscular",
       bm_title: "Mapa muscular",

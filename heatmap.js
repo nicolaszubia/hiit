@@ -25,36 +25,57 @@
     return { count: count, cardIds: cardIds };
   }
 
-  var viewYear;
-  var viewMonth;
-  var scrollToTodayAfterRender = false;
+  // Monday of the week being shown (local midnight).
+  var viewWeekStart;
 
-  function todayYM() {
-    var d = new Date();
-    return { y: d.getFullYear(), m: d.getMonth() };
+  function weekStartOf(date) {
+    var d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    var fromMon = d.getDay() === 0 ? 6 : d.getDay() - 1;
+    d.setDate(d.getDate() - fromMon);
+    return d;
   }
 
-  function daysInMonth(y, m) {
-    return new Date(y, m + 1, 0).getDate();
+  function addDays(date, n) {
+    var d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    d.setDate(d.getDate() + n);
+    return d;
   }
 
-  function calendarToday() {
-    var n = new Date();
-    return { y: n.getFullYear(), m: n.getMonth(), d: n.getDate() };
+  function sameDay(a, b) {
+    return (
+      a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
+    );
   }
 
-  function isViewingTodayMonth(y, m) {
-    var t = calendarToday();
-    return y === t.y && m === t.m;
+  function locale() {
+    return window.HiitI18n && window.HiitI18n.getLang && window.HiitI18n.getLang() === "es" ? "es" : "en";
   }
 
   function monthTitle(y, m) {
     try {
-      var loc =
-        window.HiitI18n && window.HiitI18n.getLang && window.HiitI18n.getLang() === "es" ? "es" : "en";
-      return new Date(y, m, 1).toLocaleString(loc, { month: "long", year: "numeric" });
+      return new Date(y, m, 1).toLocaleString(locale(), { month: "long", year: "numeric" });
     } catch (e) {
       return String(y) + " · " + String(m + 1);
+    }
+  }
+
+  /** e.g. "12 oct – 18 oct 2026" */
+  function weekRangeLabel(start) {
+    var end = addDays(start, 6);
+    try {
+      var from = start.toLocaleDateString(locale(), { day: "numeric", month: "short" });
+      var to = end.toLocaleDateString(locale(), { day: "numeric", month: "short", year: "numeric" });
+      return from + " – " + to;
+    } catch (e) {
+      return start.toDateString() + " – " + end.toDateString();
+    }
+  }
+
+  function weekdayShort(date) {
+    try {
+      return date.toLocaleDateString(locale(), { weekday: "short" }).replace(".", "");
+    } catch (e) {
+      return "";
     }
   }
 
@@ -211,11 +232,16 @@
     var hp = window.HiitProgress;
     if (!hp || typeof hp.getCompletionSlotDetailsForMonth !== "function") return;
 
-    var slotDetails = hp.getCompletionSlotDetailsForMonth(viewYear, viewMonth);
-    var dim = daysInMonth(viewYear, viewMonth);
-    var monthName = monthTitle(viewYear, viewMonth);
-    var today = calendarToday();
-    var showTodayColumn = isViewingTodayMonth(viewYear, viewMonth);
+    var weekEnd = addDays(viewWeekStart, 6);
+    // Slot keys are "day-bucket" per month; a week spans at most two months and never repeats a day number.
+    var slotDetails = hp.getCompletionSlotDetailsForMonth(viewWeekStart.getFullYear(), viewWeekStart.getMonth());
+    if (weekEnd.getMonth() !== viewWeekStart.getMonth()) {
+      var more = hp.getCompletionSlotDetailsForMonth(weekEnd.getFullYear(), weekEnd.getMonth());
+      Object.keys(more).forEach(function (k) {
+        slotDetails[k] = more[k];
+      });
+    }
+    var today = new Date();
 
     mount.innerHTML = "";
 
@@ -246,19 +272,19 @@
     var nav = document.createElement("div");
     nav.className = "completion-heatmap-nav";
     nav.setAttribute("role", "group");
-    nav.setAttribute("aria-label", tr("heatmap_month_group", "Month"));
+    nav.setAttribute("aria-label", tr("heatmap_week_group", "Week"));
     var prevBtn = document.createElement("button");
     prevBtn.type = "button";
     prevBtn.className = "completion-heatmap-nav__btn";
-    prevBtn.setAttribute("aria-label", tr("heatmap_prev_month", "Previous month"));
+    prevBtn.setAttribute("aria-label", tr("heatmap_prev_week", "Previous week"));
     prevBtn.textContent = "‹";
     var label = document.createElement("span");
     label.className = "completion-heatmap-nav__label";
-    label.textContent = monthTitle(viewYear, viewMonth);
+    label.textContent = weekRangeLabel(viewWeekStart);
     var nextBtn = document.createElement("button");
     nextBtn.type = "button";
     nextBtn.className = "completion-heatmap-nav__btn";
-    nextBtn.setAttribute("aria-label", tr("heatmap_next_month", "Next month"));
+    nextBtn.setAttribute("aria-label", tr("heatmap_next_week", "Next week"));
     nextBtn.textContent = "›";
     nav.appendChild(prevBtn);
     nav.appendChild(label);
@@ -270,7 +296,7 @@
     todayBtn.textContent = tr("heatmap_today", "Today");
     todayBtn.setAttribute(
       "aria-label",
-      tr("heatmap_today_aria", "Go to current month and scroll to today")
+      tr("heatmap_today_aria", "Go to the current week")
     );
 
     navWrap.appendChild(nav);
@@ -306,31 +332,31 @@
     scroll.setAttribute("tabindex", "0");
 
     var grid = document.createElement("div");
-    grid.className = "completion-heatmap-grid";
-    grid.style.gridTemplateColumns = "repeat(" + dim + ", minmax(0.45rem, 1fr))";
+    grid.className = "completion-heatmap-grid completion-heatmap-grid--week";
+    grid.style.gridTemplateColumns = "repeat(7, minmax(0, 1fr))";
 
-    for (var day = 1; day <= dim; day += 1) {
+    var days = [];
+    for (var i = 0; i < 7; i += 1) days.push(addDays(viewWeekStart, i));
+
+    days.forEach(function (date) {
       var dh = document.createElement("div");
       dh.className = "completion-heatmap-dayhead";
-      if (showTodayColumn && day === today.d) {
+      if (sameDay(date, today)) {
         dh.classList.add("completion-heatmap-dayhead--today");
         dh.setAttribute("aria-current", "date");
       }
-      dh.textContent = String(day);
+      dh.textContent = weekdayShort(date) + " " + date.getDate();
       grid.appendChild(dh);
-    }
+    });
 
-    for (var d = 1; d <= dim; d += 1) {
-      var detail = dayDetail(slotDetails, d);
-      var level = countToLevel(detail.count);
+    days.forEach(function (date) {
+      var detail = dayDetail(slotDetails, date.getDate());
       var cell = document.createElement("div");
-      cell.className = "completion-heatmap-cell completion-heatmap-cell--" + level;
-      if (showTodayColumn && d === today.d) {
-        cell.classList.add("completion-heatmap-cell--today");
-      }
-      bindHeatmapCellTooltip(cell, scroll, monthName, d, detail);
+      cell.className = "completion-heatmap-cell completion-heatmap-cell--" + countToLevel(detail.count);
+      if (sameDay(date, today)) cell.classList.add("completion-heatmap-cell--today");
+      bindHeatmapCellTooltip(cell, scroll, monthTitle(date.getFullYear(), date.getMonth()), date.getDate(), detail);
       grid.appendChild(cell);
-    }
+    });
 
     scroll.appendChild(grid);
 
@@ -340,55 +366,22 @@
     mount.appendChild(card);
 
     prevBtn.addEventListener("click", function () {
-      scrollToTodayAfterRender = false;
-      if (viewMonth === 0) {
-        viewYear -= 1;
-        viewMonth = 11;
-      } else {
-        viewMonth -= 1;
-      }
+      viewWeekStart = addDays(viewWeekStart, -7);
       render();
     });
 
     nextBtn.addEventListener("click", function () {
-      scrollToTodayAfterRender = false;
-      if (viewMonth === 11) {
-        viewYear += 1;
-        viewMonth = 0;
-      } else {
-        viewMonth += 1;
-      }
+      viewWeekStart = addDays(viewWeekStart, 7);
       render();
     });
 
     todayBtn.addEventListener("click", function () {
-      var tm = todayYM();
-      viewYear = tm.y;
-      viewMonth = tm.m;
-      scrollToTodayAfterRender = true;
+      viewWeekStart = weekStartOf(new Date());
       render();
     });
-
-    if (scrollToTodayAfterRender) {
-      scrollToTodayAfterRender = false;
-      window.requestAnimationFrame(function () {
-        var mark = grid.querySelector(".completion-heatmap-dayhead--today");
-        if (mark && scroll) {
-          var reduceMotion =
-            window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-          mark.scrollIntoView({
-            inline: "center",
-            block: "nearest",
-            behavior: reduceMotion ? "auto" : "smooth",
-          });
-        }
-      });
-    }
   }
 
-  var startYm = todayYM();
-  viewYear = startYm.y;
-  viewMonth = startYm.m;
+  viewWeekStart = weekStartOf(new Date());
 
   render();
 

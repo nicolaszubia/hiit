@@ -8,14 +8,6 @@
     return v && v !== key ? v : fallback;
   }
 
-  function escapeHtml(s) {
-    return String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-
   function loadIds() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
@@ -97,124 +89,11 @@
     return btn;
   }
 
-  /* ---------- Header menu (bookmark icon + dropdown) ---------- */
-
-  function closeMenu(root) {
-    var d = root.querySelector(".saved-menu__dropdown");
-    var t = root.querySelector(".saved-menu__trigger");
-    if (d) d.hidden = true;
-    if (t) t.setAttribute("aria-expanded", "false");
-  }
-
-  function renderList(root) {
-    var cards = savedCards();
-    var count = root.querySelector(".saved-menu__count");
-    var list = root.querySelector(".saved-menu__list");
-    var empty = root.querySelector(".saved-menu__empty");
-    var title = root.querySelector(".saved-menu__heading");
-    var trigger = root.querySelector(".saved-menu__trigger");
-
-    title.textContent = tr("saved_heading", "Saved sessions");
-    empty.textContent = tr("saved_empty", "No saved sessions yet. Tap Save session on any session to keep it here.");
-    trigger.setAttribute("aria-label", tr("saved_menu_aria", "Saved sessions"));
-    count.textContent = String(cards.length);
-    count.hidden = cards.length === 0;
-    empty.hidden = cards.length > 0;
-    list.hidden = cards.length === 0;
-
-    list.innerHTML = cards
-      .map(function (c) {
-        return (
-          '<li><a class="saved-menu__item" href="detail.html?id=' +
-          encodeURIComponent(c.id) +
-          '" role="menuitem"><span class="saved-menu__item-id">#' +
-          escapeHtml(c.id) +
-          '</span><span class="saved-menu__item-title">' +
-          escapeHtml(c.title) +
-          (c.subtitle ? ' <span class="saved-menu__item-sub">' + escapeHtml(c.subtitle) + "</span>" : "") +
-          "</span></a></li>"
-        );
-      })
-      .join("");
-  }
-
-  function createMenu() {
-    var root = document.createElement("div");
-    root.className = "saved-menu";
-    root.setAttribute("data-saved-menu", "");
-    root.innerHTML =
-      '<button type="button" class="saved-menu__trigger header-badges-link" aria-haspopup="true" aria-expanded="false">' +
-      bookmarkSvg("header-badges-link__icon") +
-      '<span class="saved-menu__count" hidden></span></button>' +
-      '<div class="saved-menu__dropdown" hidden>' +
-      '<p class="saved-menu__heading"></p>' +
-      '<p class="saved-menu__empty"></p>' +
-      '<ul class="saved-menu__list" role="menu"></ul>' +
-      "</div>";
-
-    var trigger = root.querySelector(".saved-menu__trigger");
-    var dropdown = root.querySelector(".saved-menu__dropdown");
-
-    trigger.addEventListener("click", function (e) {
-      e.stopPropagation();
-      var open = dropdown.hidden;
-      if (open) renderList(root);
-      dropdown.hidden = !open;
-      trigger.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-    dropdown.addEventListener("click", function (e) {
-      e.stopPropagation();
-    });
-    document.addEventListener("click", function () {
-      closeMenu(root);
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !dropdown.hidden) {
-        closeMenu(root);
-        trigger.focus();
-      }
-    });
-    document.addEventListener("hiit-saved-change", function () {
-      renderList(root);
-    });
-    window.addEventListener("hiit-langchange", function () {
-      renderList(root);
-    });
-    window.addEventListener("storage", function (e) {
-      if (e.key === STORAGE_KEY) renderList(root);
-    });
-
-    renderList(root);
-    return root;
-  }
-
-  /* Insert the menu just before the badges link on every page that has one.
-     The detail page rebuilds its header on language change, so keep watching. */
-  function mountMenus() {
-    document.querySelectorAll("a.header-badges-link").forEach(function (link) {
-      var prev = link.previousElementSibling;
-      if (prev && prev.hasAttribute("data-saved-menu")) return;
-      link.parentNode.insertBefore(createMenu(), link);
-    });
-  }
-
-  function init() {
-    mountMenus();
-    if (window.MutationObserver) {
-      new MutationObserver(mountMenus).observe(document.body, { childList: true, subtree: true });
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
-
   window.HiitSaved = {
     isSaved: isSaved,
     toggle: toggle,
     getSavedIds: loadIds,
+    getSavedCards: savedCards,
     createSaveButton: createSaveButton,
   };
 })();

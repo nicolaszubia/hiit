@@ -98,6 +98,15 @@
     return item;
   }
 
+  /** Builds a card the same way the dashboard does (used by the saved sessions page). */
+  window.HiitCards = {
+    build: function (card) {
+      var hp = getProgress();
+      var done = card.exercises.length > 0 && hp.isFullyComplete(hp.getChecksForCard(card.id, card.exercises.length));
+      return buildCardElement(card, hp, done ? "completed" : "remaining");
+    },
+  };
+
   function renderMetrics(completedCount, remainingCount) {
     var grid = document.getElementById("metrics-grid");
     if (!grid) return;
